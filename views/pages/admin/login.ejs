@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Employee System | Admin Login</title>
+    <!-- Bootstrap 5 CSS (lightweight, modern) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts: Inter for clean minimalism -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f7fb;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        /* Clean card - minimal shadow, crisp borders */
+        .login-card {
+            max-width: 440px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+            transition: box-shadow 0.2s ease;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .login-card:hover {
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Logo area - simple, professional */
+        .logo-wrapper {
+            text-align: center;
+            padding: 2rem 2rem 0.5rem 2rem;
+        }
+
+        .logo-icon {
+            background: #ffffff;
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            border: 1px solid #eef2f6;
+        }
+
+        .logo-icon i {
+            font-size: 2.5rem;
+            color: #1e6f3f;
+        }
+
+        .company-name {
+            font-size: 1.6rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            color: #1a2c3e;
+            margin-bottom: 0.2rem;
+        }
+
+        .company-badge {
+            font-size: 0.7rem;
+            color: #5c6f87;
+            background: #f0f2f5;
+            display: inline-block;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            font-weight: 500;
+        }
+
+        /* Form spacing - clean */
+        .form-section {
+            padding: 1.2rem 2rem 2rem 2rem;
+        }
+
+        .form-label {
+            font-weight: 500;
+            font-size: 0.8rem;
+            color: #2c3e4e;
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.2px;
+        }
+
+        .input-group-clean {
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            transition: all 0.2s;
+        }
+
+        .input-group-clean:focus-within {
+            border-color: #1e6f3f;
+            box-shadow: 0 0 0 3px rgba(30, 111, 63, 0.08);
+        }
+
+        .input-group-text-clean {
+            background: #ffffff;
+            border: none;
+            padding: 0 0 0 1rem;
+            color: #8a99b0;
+            font-size: 0.95rem;
+        }
+
+        .form-control-clean {
+            border: none;
+            padding: 0.75rem 1rem 0.75rem 0.5rem;
+            font-size: 0.9rem;
+            background: transparent;
+            font-weight: 450;
+            outline: none;
+            box-shadow: none;
+        }
+
+        .form-control-clean:focus {
+            outline: none;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        /* password toggle button minimal */
+        .password-toggle-btn {
+            background: transparent;
+            border: none;
+            padding-right: 1rem;
+            color: #8a99b0;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .password-toggle-btn:hover {
+            color: #1e6f3f;
+        }
+
+        .btn-login {
+            background: #1e6f3f;
+            border: none;
+            padding: 0.75rem 0;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 40px;
+            color: white;
+            transition: all 0.2s;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+        }
+
+        .btn-login:hover {
+            background: #155a34;
+            transform: translateY(-1px);
+        }
+
+        .btn-login:active {
+            transform: translateY(1px);
+        }
+
+        /* alert minimal */
+        .alert-minimal {
+            border-radius: 16px;
+            font-size: 0.8rem;
+            padding: 0.7rem 1rem;
+            background: #fef6e0;
+            border: 1px solid #ffe6b3;
+            color: #b85c00;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1.2rem;
+        }
+
+        .alert-minimal.show {
+            display: flex;
+        }
+
+        .alert-minimal.error {
+            background: #fef2f0;
+            border-color: #ffcdc7;
+            color: #b33a2c;
+        }
+
+        .alert-minimal.success {
+            background: #e6f7ed;
+            border-color: #b8e3c5;
+            color: #146b3a;
+        }
+
+        /* validation inline feedback */
+        .invalid-feedback-custom {
+            font-size: 0.7rem;
+            color: #d9534f;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .invalid-feedback-custom.show {
+            display: block;
+        }
+
+        .form-control-clean.is-invalid-border {
+            border-color: #e25c5c;
+        }
+
+        .input-group-clean.is-invalid-group {
+            border-color: #e25c5c;
+        }
+
+        .divider-text {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #9aa9bb;
+            font-size: 0.7rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .divider-text::before,
+        .divider-text::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .divider-text::before {
+            margin-right: 1rem;
+        }
+
+        .divider-text::after {
+            margin-left: 1rem;
+        }
+
+        .footer-note {
+            font-size: 0.7rem;
+            text-align: center;
+            color: #8d9aaa;
+            border-top: 1px solid #f0f4f9;
+            padding-top: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        a {
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .link-muted {
+            color: #5b6e8c;
+            font-size: 0.75rem;
+        }
+
+        .link-muted:hover {
+            color: #1e6f3f;
+        }
+
+        .link-primary-custom {
+            color: #1e6f3f;
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
+
+        .link-primary-custom:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .form-section {
+                padding: 1rem 1.5rem 1.8rem 1.5rem;
+            }
+            .logo-wrapper {
+                padding: 1.5rem 1.5rem 0.2rem 1.5rem;
+            }
+            .company-name {
+                font-size: 1.4rem;
+            }
+            .logo-icon {
+                width: 56px;
+                height: 56px;
+            }
+            .logo-icon i {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-card border border-3 border-secondary-light">
+    <!-- Logo & branding section (minimal) -->
+    <div class="logo-wrapper">
+        <div class="logo-icon">
+            <i class="bi bi-briefcase-fill"></i>
+        </div>
+        <h1 class="company-name">Employee<span style="font-weight:500;">Sys</span></h1>
+        <span class="company-badge"><i class="bi bi-shield-check me-1"></i>Admin Portal</span>
+    </div>
+
+    <!-- main form area -->
+    <div class="form-section">
+        <!-- Dynamic alert for feedback (errors or success simulation) -->
+        <div id="liveAlert" class="alert-minimal">
+            <i class="bi bi-info-circle-fill"></i>
+            <span id="alertMsgText">Validation message</span>
+        </div>
+
+        <form method="post" action="">
+            <!-- Email field with clean design -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <div class="input-group-clean d-flex align-items-center" id="emailGroup">
+                    <span class="input-group-text-clean"><i class="bi bi-envelope"></i></span>
+                    <input type="email" id="email" class="form-control-clean flex-grow-1" placeholder="Email" name="email">
+                </div>
+                <div id="emailError" class="invalid-feedback-custom">Please enter a valid email (e.g., name@company.com).</div>
+            </div>
+
+            <!-- Password field with toggle visibility (minimal icon) -->
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-group-clean d-flex align-items-center" id="passwordGroup">
+                    <span class="input-group-text-clean"><i class="bi bi-lock"></i></span>
+                    <input type="password" id="password" class="form-control-clean flex-grow-1" name="password" placeholder="Password">
+                </div>
+            </div>
+
+            <!-- extra row: remember + forgot (minimal) -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <a href="#" id="forgotLink" class="link-muted">Forgot password?</a>
+            </div>
+
+            <!-- Login CTA -->
+            <button type="submit" class="btn btn-login w-100" id="loginBtn">
+                <i class="bi bi-box-arrow-in-right me-2"></i> Log in
+            </button>
+             <a href="/user/signup" class="btn btn-primary w-100 mt-4" id="loginBtn">
+                <i class="bi bi-box-arrow-in-right me-2"></i> sign in
+            </a>
+            <div class="text-center mt-3">
+                <a href="#" id="signupLink" class="link-primary-custom"><i class="bi bi-person-plus me-1"></i> Request employee access</a>
+            </div>
+        </form>
+    </div>
+    <div class="footer-note">
+        <i class="bi bi-dot"></i> Secure employee system <i class="bi bi-dot"></i> v3.0
+    </div>
+</div>
+
+<!-- Bootstrap JS bundle (lightweight) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

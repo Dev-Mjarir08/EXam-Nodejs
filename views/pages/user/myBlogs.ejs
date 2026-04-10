@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Blogs</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f5f7fa;
+        }
+        .table img {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .card {
+            border-radius: 12px;
+        }
+        .btn-sm {
+            padding: 4px 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <h3 class="mb-4 text-center">My Blogs</h3>
+
+        <table class="table table-bordered table-hover align-middle text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Tags</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (blogs.length > 0) { %>
+                    <% blogs.forEach((blog, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+
+                            <!-- Image -->
+                            <td>
+                                <% if (blog.image) { %>
+                                    <img src="/<%= blog.image %>" alt="blog">
+                                <% } else { %>
+                                    No Image
+                                <% } %>
+                            </td>
+
+                            <!-- Title -->
+                            <td><%= blog.title %></td>
+
+                            <!-- Category -->
+                            <td><%= blog.category %></td>
+
+                            <!-- Tags -->
+                            <td>
+                                <% if (blog.tags) { %>
+                                    <%= blog.tags %>
+                                <% } else { %>
+                                    -
+                                <% } %>
+                            </td>
+
+                            <!-- Actions -->
+                            <td>
+                                <a href="/user/editBlog/<%= blog._id %>" class="btn btn-warning btn-sm">Edit</a>
+
+                                <a href="/user/deleteBlog/<%= blog._id %>" 
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Are you sure?')">
+                                   Delete
+                                </a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="6">No Blogs Found</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+
+        <!-- Add Blog Button -->
+        <div class="text-end mt-3">
+            <a href="/user/addBlog" class="btn btn-primary">+ Add New Blog</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
